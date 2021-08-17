@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
+        <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8 py-8 px-8">
+          <div class="flex flex-row items-center justify-between">
+            <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Flowtrail UI</a>
+            <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
+              <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                <path x-show="open"  fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+          </div>
+          <nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex md:justify-end md:flex-row">
+            <a class="px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Blog</a>
+            <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Portfolio</a>
+            <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">About</a>
+            <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Contact</a>
+            <div @click.away="open = false" class="relative" x-data="{ open: false }">
+              <button @click="open = !open" class="flex flex-row items-center md:justify-start justify-between w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                <span>Dropdown</span>
+                <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              </button>
+              <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+                  <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #1</a>
+                  <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #2</a>
+                  <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #3</a>
+                </div>
+              </div>
+            </div>    
+          </nav>
+        </div>
+      </div>
+      <!-- <div class="min-h-screen p-10">
+            <div class="md:flex text-center bg-green-300 ">
+                <div class="left p-1 lg:p-0.5 md:p-0.5">Left!</div>
+                <div class="right p-1 lg:p-0.5 md:p-0.5">Right!</div>
+        </div>
+
+        <div class="flex md:grid bg-green-600 text-3xl">
+            <div>
+                <div class="animate-spin md:animate-none h-15 w-15">
+                <h1>hello</h1>
+                </div>
+            </div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+        </div>
+        <div class="flex bg-green-600 text-3xl justify-between">
+            <div>
+               1
+            </div>
+            <div class="pr-10 md:p-0">2</div>
+        </div>
+        <div class="w-full h-64 bg-black"></div>
+      </div> -->
+
+      <div class="form-container py-8 px-8 bg-green-600">
+            <div class="container mx-auto w-full h-full">
+              <div class="max-w-screen-sm mx-auto w-full h-full flex flex-col items-center justify-center">
+                <div class="p-5 w-full">
+                  <h1 class="text-lg font-bold mb-8">Form Validation</h1>
+                  <form
+                    method="POST"
+                    x-data="validateForm()"
+                    x-init="
+                      $watch('fullname', value => { validate('fullname') })
+                      $watch('businessname', value => { validate('businessname') })
+                      $watch('email', value => { validate('email') })
+                      $watch('password', value => { validate('password') })
+                    "
+                    class="flex flex-col space-y-4"
+                  >
+                  <div class="flex justify-between">
+                    <div class="flex flex-col space-y-2">
+                        <label for="name">Name</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                      <div class="flex flex-col space-y-2">
+                          <label for="name">Business Name</label>
+                          <input type="text" x-model="businessname" class="px-2 py-1 w-96 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your Business Name...">
+                          <span class="text-sm italic text-red-500">
+                            <div x-text="validation.businessname.message"></div>
+                          </span>
+                        </div>
+                  </div>
+              
+                      <div class="flex flex-col space-y-2">
+                        <label for="name"> Business Address</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                      <div class="flex flex-col space-y-2">
+                        <label for="name"> Business Owner</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                      <div class="flex flex-col space-y-2">
+                        <label for="name"> Business Address</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                    <div class="flex flex-col space-y-2">
+                      <label for="email">EIN</label>
+                      <input type="email" x-model="email" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your email address...">
+                      <span class="text-sm italic text-red-500">
+                        <div x-text="validation.email.message"></div>
+                      </span>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="password">Phone</label>
+                        <input type="password" x-model="password" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your password...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.password.message"></div>
+                        </span>
+                    <div class="flex flex-col space-y-2">
+                        <label for="email">Email</label>
+                        <input type="email" x-model="email" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your email address...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.email.message"></div>
+                        </span>
+                      </div>
+                      <div class="flex flex-col space-y-2">
+                        <label for="name">Amazon Merchant ID</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                      <div class="flex flex-col space-y-2">
+                        <label for="name">Years in Business</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                      <div class="flex flex-col space-y-2">
+                        <label for="name">Yearly Revenue</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                      <div class="flex flex-col space-y-2">
+                        <label for="name">Purchase Order Sum</label>
+                        <input type="text" x-model="fullname" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your full name...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.fullname.message"></div>
+                        </span>
+                      </div>
+                    <div class="flex flex-col space-y-2">
+                      <label for="password">Credit Days Required</label>
+                      <input type="password" x-model="password" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your password...">
+                      <span class="text-sm italic text-red-500">
+                        <div x-text="validation.password.message"></div>
+                      </span>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="password">Password</label>
+                        <input type="password" x-model="password" class="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-400" placeholder="Enter your password...">
+                        <span class="text-sm italic text-red-500">
+                          <div x-text="validation.password.message"></div>
+                        </span>
+                      </div>
+                    <div class="flex flex-row-reverse">
+                      <button class="px-2 py-1 uppercase border bg-gray-200 text-gray-900">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+      </div>
+  <script>
+    window.validateForm = function () {
+        return {
+            fullname: '',
+            businessname: '',
+            email: '',
+            password: '',
+            validation: {
+            fullname: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                minLength: function (field, value = 2) {
+                    if (field && field.length >= value) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: `This field must be empty minimum ${value}.`}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            },
+            businessname: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                minLength: function (field, value = 2) {
+                    if (field && field.length >= value) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: `businessname field must be empty minimum ${value}.`}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            },
+            email: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field is required.'}
+                    }
+                },
+                email: function (field) {
+                    const rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    if (rgx.test(field)) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field has wrong email address format.'}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            },
+            password: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field is required.'}
+                    }
+                },
+                minLength: function (field, value = 2) {
+                    if (field && field.length >= value) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: `This field must have minimum ${value} characters length.`}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            }
+            },
+            validate (field) {
+            for (const key in this.validation[field].rule) {
+                const validationResult = this.validation[field].rule[key](this[field])
+                if (validationResult.error) {
+                this.validation[field].error = true
+                this.validation[field].message = validationResult.message
+                break
+                }
+                this.validation[field].error = false
+                this.validation[field].message = ''
+                continue
+            }
+            }
+        }
+        }
+  </script>
+</body>
+</html>

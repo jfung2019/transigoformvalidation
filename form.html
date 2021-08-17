@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js"></script>
+    <title>Form</title>
+</head>
+<style>
+  input:checked + label {
+  background-color: #F5FFF6;
+	border-color: #1FC157;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+input:checked + label span {
+	color: green;
+}
+
+</style>
+<body>
+  
+<!-- Transigo Form -->
+<div class="relative bg-white">
+
+<!-- Nav/Header -->
+    <div class="w-full mx-auto px-4 sm:px-6 border-b-2 border-gray-100 max-w-screen-lg">
+      <div class="flex justify-between items-center lg:py-6 py-3 md:justify-start md:space-x-10">
+        <div class="flex justify-start lg:w-0 lg:flex-1">
+          <a href="#">
+            <span class="sr-only">Transigo Logo</span>
+            <img class="lg:h-20 lg:w-auto h-12 w-auto" src="images/logo4.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form  -->
+  <div class="bg-gray-200 py-10">
+    <h1 class="text-center text-indigo-600 text-2xl font-semibold p-4">Transigo Financing Application</h1>
+    <P class="text-center pb-3">Filing this application will not affect your credit score.</P>
+
+    <div class="flex flex-wrap justify-center">
+    <div class="bg-white flex justify-center mt-5 w-full lg:w-6/12 rounded-lg">
+      <div class="py-5 w-full p-5">
+        <form action="" x-data="{ name: ''}">
+          <!-- 2 col input for lg / 1 row for sm -->
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
+                Name <span class="text-red-600">*</span>
+              </label>
+              <input x-model="name" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Name">
+              <p class="text-red-500 text-base italic">Please fill out this field.</p>
+            </div>
+            <div class="w-full md:w-1/2 px-3">
+              <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
+                Business Name <span class="text-red-600">*</span>
+              </label>
+              <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Business Name">
+              <p class="text-red-500 text-base italic">Please fill out this field.</p>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
+              Business Owner <span class="text-red-600">*</span>
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Enter Business Owner">
+            <p class="text-red-500 text-base italic">Please fill out this field.</p>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
+              Owner’s Address <span class="text-red-600">*</span>
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Enter Owner’s Address">
+            <p class="text-red-500 text-base italic">Please fill out this field.</p>
+          </div>
+
+            <!-- 2 col input for lg / 1 row for sm -->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
+                  EIN <span class="text-red-600">*</span>
+                </label>
+                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter EIN">
+                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
+                  Phone <span class="text-red-600">*</span>
+                </label>
+                <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Phone Number (Format: +12123331212)">
+                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <!-- 2 col input for lg / 1 row for sm -->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
+                  Email <span class="text-red-600">*</span>
+                </label>
+                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Email Address">
+                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
+                  Amazon Merchant ID<span class="text-red-600">*</span>
+                </label>
+                <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Amazon Merchant ID">
+                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <!-- 2 col input for lg / 1 row for sm -->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
+                  Years in Business  <span class="text-red-600">*</span>
+                </label>
+                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Years in Business">
+                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
+                  Yearly Revenue  <span class="text-red-600">*</span>
+                </label>
+                <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Yearly Revenue">
+                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <!-- 2 col input for lg / 1 row for sm -->
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
+                  Purchase Order Sum  <span class="text-red-600">*</span>
+                </label>
+                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Purchase Order Sum">
+                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
+                  Credit Days Required  <span class="text-red-600">*</span>
+                </label>
+                <!-- <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Credit Days Required"> -->
+                <div class="grid grid-cols-3 gap-2 w-full max-w-screen-sm">
+                  <div>
+                    <input class="hidden" id="radio_1" type="radio" name="radio" value="60 Days">
+                    <label class="flex flex-col p-4 border-2 border-gray-400 rounded cursor-pointer" for="radio_1">
+                      <span class="text-base text-center text-gray-400 font-semibold">60 Days</span>
+                    </label>
+                  </div>
+                  <div>
+                    <input class="hidden" id="radio_2" type="radio" name="radio" value="90 Days">
+                    <label class="flex flex-col p-4 border-2 border-gray-400 rounded cursor-pointer" for="radio_2">
+                      <span class="text-base text-center text-gray-400 font-semibold">90 Days</span>
+                    </label>
+                  </div>
+                  <div>
+                    <input class="hidden" id="radio_3" type="radio" name="radio" value="120 Days">
+                    <label class="flex flex-col p-4 border-2 border-gray-400 rounded cursor-pointer" for="radio_3">
+                      <span class="text-base text-center text-gray-400 font-semibold">120 Days</span>
+                    </label>
+                  </div>
+                </div>
+                <p class="text-red-500 text-base italic">This cannot be left unselected.</p>
+              </div>
+            </div>
+
+          <div class="mb-4">
+            <label class="flex space-x-1 text-gray-700 text-base font-semibold mb-2" for="username">
+              Bank Information
+              <span class="text-red-600">*</span> 
+              <img class="lg:h-auto lg:w-auto h-5 w-auto cursor-help" src="images/questionMarkIcon.png" alt=""> 
+              <span class="text-sm font-normal text-indigo-500 underline align-bottom">Click here for more info</span>
+            </label>
+
+            <button class="w-full bg-transparent text-red-500 hover:bg-red-700 hover:text-white text-white font-bold py-2 px-4 border border-red-600 rounded">
+              Click here to set Bank info +
+            </button>   
+          </div>
+
+
+          <button type="submit" :disabled="!name.length" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded disabled:bg-gray-200">
+            Submit
+          </button>
+
+          <!-- <div class="flex items-center justify-between">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+              Sign In
+            </button>
+            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+              Forgot Password?
+            </a>
+          </div> -->
+
+        </form>
+      </div>
+    </div>
+    </div>
+
+
+  
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white">
+    <div class="md:flex lg:pl-64 max-w-screen-lg space-x-2 text-center py-10 p-8 text-gray-500">
+      <P>Copyright © 2021 <span class="text-green-500">Transigo</span></P>
+      <P>All Rights Reserved</P>
+    </div>
+  </footer>
+</body>
+</html>
