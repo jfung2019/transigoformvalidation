@@ -19,6 +19,21 @@ input:checked + label span {
 	color: green;
 }
 
+.green-color {
+  background-color: #1FC157;
+}
+
+.bubble:after{
+  content: "";
+  position: absolute;
+  top: 100%;
+  margin: 0 auto;
+  border-top: 20px solid blue;
+  border-top-color: inherit; 
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent; 
+}
+
 </style>
 <body>
   
@@ -37,48 +52,62 @@ input:checked + label span {
       </div>
     </div>
   </div>
-
+  
   <!-- Form  -->
   <div class="bg-gray-200 py-10">
-    <h1 class="text-center text-indigo-600 text-2xl font-semibold p-4">Transigo Financing Application</h1>
-    <P class="text-center pb-3">Filing this application will not affect your credit score.</P>
+    <div class="flex flex-wrap justify-center">
+      <div class="justify-center w-11/12">
+        <h1 class="text-center text-blue-900 text-2xl lg:text-4xl font-semibold py-3">Transigo Financing Application</h1>
+        <P class="text-center pb-3">Filing this application will not affect your credit score.</P>
+      </div>
+    </div>
 
     <div class="flex flex-wrap justify-center">
     <div class="bg-white flex justify-center mt-5 w-full lg:w-6/12 rounded-lg">
-      <div class="py-5 w-full p-5">
-        <form action="" x-data="{ name: ''}">
+      <div class="py-5 w-full p-6">
+        <form action="" 
+        x-data="validateForm()"
+                    x-init="
+                      $watch('name', value => { validate('name') })
+                      $watch('businessName', value => { validate('businessName') })
+                      $watch('businessOwner', value => { validate('businessOwner') })
+                      $watch('email', value => { validate('email') })
+                      $watch('password', value => { validate('password') })
+                    "
+        >
           <!-- 2 col input for lg / 1 row for sm -->
           <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                 Name <span class="text-red-600">*</span>
               </label>
-              <input x-model="name" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Name">
-              <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              <input x-model.lazy="name" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Name">
+              <!-- <p class="text-red-600 text-base" x-text="validation.name.message"></p> -->
+              <p class="text-red-600 text-base" x-text="validation.name.message"></p>
+              <!-- <p class="text-red-600 text-base" x-data="validation.name.successclass"></p> -->
             </div>
             <div class="w-full md:w-1/2 px-3">
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                 Business Name <span class="text-red-600">*</span>
               </label>
-              <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Business Name">
-              <p class="text-red-500 text-base italic">Please fill out this field.</p>
+              <input x-model.lazy="businessName" class="mb-3 h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Business Name">
+              <p class="text-red-500 text-base" x-text="validation.businessName.message"></p>
             </div>
           </div>
-
           <div class="mb-4">
             <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
               Business Owner <span class="text-red-600">*</span>
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Enter Business Owner">
-            <p class="text-red-500 text-base italic">Please fill out this field.</p>
+            <input x-model="businessOwner" class="mb-3 h-14 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="username" type="text" placeholder="Enter Business Owner">
+              <p class="text-red-500 text-base" x-text="validation.businessOwner.message"></p>
           </div>
 
           <div class="mb-4">
             <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
               Owner’s Address <span class="text-red-600">*</span>
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Enter Owner’s Address">
-            <p class="text-red-500 text-base italic">Please fill out this field.</p>
+            <input class="mb-3 h-14 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="username" type="text" placeholder="Enter Owner’s Address">
+            <p class="text-red-500 text-base">This field cannot be empty</p>
           </div>
 
             <!-- 2 col input for lg / 1 row for sm -->
@@ -87,15 +116,15 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   EIN <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter EIN">
-                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter EIN">
+                <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Phone <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Phone Number (Format: +12123331212)">
-                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+                <input class="h-14 mb-3 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Phone Number (Format: +12123331212)">
+                <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
             </div>
 
@@ -105,17 +134,19 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Email <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Email Address">
-                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+                <input x-model="email" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Email Address">
+                <!-- <p class="text-red-500 text-base">This field cannot be empty.</p> -->
+                <p class="text-red-500 text-base" x-text="validation.email.message"></p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Amazon Merchant ID<span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Amazon Merchant ID">
-                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Amazon Merchant ID">
+                <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
             </div>
+            
 
             <!-- 2 col input for lg / 1 row for sm -->
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -123,15 +154,15 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Years in Business  <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Years in Business">
-                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Years in Business">
+                <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Yearly Revenue  <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Yearly Revenue">
-                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+                <input class="mb-3 appearance-none h-14 block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Yearly Revenue">
+                <p class="text-red-500 text-base">This field cannot be empty</p>
               </div>
             </div>
 
@@ -141,8 +172,8 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Purchase Order Sum  <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Purchase Order Sum">
-                <p class="text-red-500 text-base italic">Please fill out this field.</p>
+                <input class="appearance-none block w-full h-14 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Purchase Order Sum">
+                <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
@@ -152,44 +183,58 @@ input:checked + label span {
                 <div class="grid grid-cols-3 gap-2 w-full max-w-screen-sm">
                   <div>
                     <input class="hidden" id="radio_1" type="radio" name="radio" value="60 Days">
-                    <label class="flex flex-col p-4 border-2 border-gray-400 rounded cursor-pointer" for="radio_1">
+                    <label class="flex flex-col p-3.5 border-2 border-gray-200 rounded cursor-pointer" for="radio_1">
                       <span class="text-base text-center text-gray-400 font-semibold">60 Days</span>
                     </label>
                   </div>
                   <div>
                     <input class="hidden" id="radio_2" type="radio" name="radio" value="90 Days">
-                    <label class="flex flex-col p-4 border-2 border-gray-400 rounded cursor-pointer" for="radio_2">
+                    <label class="flex flex-col p-3.5 border-2 border-gray-200 rounded cursor-pointer" for="radio_2">
                       <span class="text-base text-center text-gray-400 font-semibold">90 Days</span>
                     </label>
                   </div>
                   <div>
                     <input class="hidden" id="radio_3" type="radio" name="radio" value="120 Days">
-                    <label class="flex flex-col p-4 border-2 border-gray-400 rounded cursor-pointer" for="radio_3">
+                    <label class="flex flex-col p-3.5 border-2 border-gray-200 rounded cursor-pointer" for="radio_3">
                       <span class="text-base text-center text-gray-400 font-semibold">120 Days</span>
                     </label>
                   </div>
                 </div>
-                <p class="text-red-500 text-base italic">This cannot be left unselected.</p>
+                <p class="text-red-500 text-base mt-3">This cannot be left unselected.</p>
               </div>
             </div>
 
           <div class="mb-4">
             <label class="flex space-x-1 text-gray-700 text-base font-semibold mb-2" for="username">
               Bank Information
-              <span class="text-red-600">*</span> 
-              <img class="lg:h-auto lg:w-auto h-5 w-auto cursor-help" src="images/questionMarkIcon.png" alt=""> 
-              <span class="text-sm font-normal text-indigo-500 underline align-bottom">Click here for more info</span>
-            </label>
 
-            <button class="w-full bg-transparent text-red-500 hover:bg-red-700 hover:text-white text-white font-bold py-2 px-4 border border-red-600 rounded">
+  
+
+              <span class="text-red-600">*</span> 
+              <div x-data="{ open: false }" class="ml-4" @mouseleave="open = false">
+                <button @mouseover="open = true" ><img class="lg:h-6 lg:w-auto h-6 w-auto cursor-help" src="images/questionMarkIcon.png" alt=""> </button>
+                <div x-show="open" class="flex justify-center">
+                  <span class="lg:-mt-64 p-4 -mt-64 lg:w-1/6 w-4/6 lg:h-72 absolute bg-white shadow text-sm bubble whitespace-pre-wrap">In order for us to be able to extend you the requested credit amount, we will use Plaid to access your bank account for two specific purposes. The first is to view your transaction history to properly assess your credit request. The second is to initiate an automatic ACH transfer for repayment of the extended credit amount at the end of the pre-agreed term.</span>
+                </div>
+              </div>
+              <span class="text-base font-medium text-blue-900 underline align-bottom">Click here for more info</span>
+            </label>
+            <button class="w-full bg-red-200 h-14 text-red-500 hover:bg-red-700 hover:text-white text-white font-bold py-2 px-4 border border-red-600 rounded">
               Click here to set Bank info +
             </button>   
+            <p class="text-red-500 text-base mt-3">A bank account has to be added.</p>
           </div>
 
 
-          <button type="submit" :disabled="!name.length" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded disabled:bg-gray-200">
-            Submit
-          </button>
+ 
+
+          <div class="flex flex-wrap justify-center">
+            <button type="submit" :disabled="!name.length" class="h-14 lg:w-2/4 w-full my-4 hover:bg-green-700 text-white font-bold py-2 px-4 border green-color rounded disabled:bg-gray-200">
+              Submit
+            </button>
+          </div>
+ 
+          
 
           <!-- <div class="flex items-center justify-between">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -216,5 +261,241 @@ input:checked + label span {
       <P>All Rights Reserved</P>
     </div>
   </footer>
+
+  <!-- Validator Script -->
+  <script>
+    window.validateForm = function () {
+        return {
+            name: '',
+            businessName: '',
+            businessOwner: '',
+            ownerAddress: '',
+            ein: '',
+            phone: '',
+            email: '',
+            password: '',
+            amazonMerchantId: '',
+            yearsInBusiness: '',
+            yearlyRevenue: '',
+            purchaseOrderSum: '',
+            creditDaysRequired: '',
+            validation: {
+            name: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                isSuccess: function (field, value = 1) {
+                    if (field && field.length >= value) {
+                    return { error: true, message: 'Sucess class'}
+                    } else {
+                    return { error: true, message: `Error ${value}.`}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            },
+            businessName: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            businessOwner: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            ownerAddress: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            ein: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            phone: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                phone: function (field) {
+                  // change this for phone regex us format
+                    const rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    if (rgx.test(field)) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'Enter a valid phone number (e.g. +12125552368).'}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            },
+            email: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field is required.'}
+                    }
+                },
+                email: function (field) {
+                    const rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    if (rgx.test(field)) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field has wrong email address format.'}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            },
+            password: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field is required.'}
+                    }
+                },
+                minLength: function (field, value = 2) {
+                    if (field && field.length >= value) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: `This field must have minimum ${value} characters length.`}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            }
+            },
+            amazonMerchantId: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            yearsInBusiness: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            yearlyRevenue: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            purchaseOrderSum: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            creditDaysRequired: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            validate (field) {
+            for (const key in this.validation[field].rule) {
+                const validationResult = this.validation[field].rule[key](this[field])
+                if (validationResult.error) {
+                this.validation[field].error = true
+                this.validation[field].message = validationResult.message
+                break
+                }
+                this.validation[field].error = false
+                this.validation[field].message = ''
+                continue
+            }
+            }
+        }
+        }
+  </script>
 </body>
 </html>
