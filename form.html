@@ -36,7 +36,7 @@ input:checked + label span {
 	margin-bottom: -16px;
 } */
 .sucess{
-  
+  background-color: red!important;
 }
 .bubble{
   z-index: 10;
@@ -109,13 +109,14 @@ input:checked + label span {
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                 Name <span class="text-red-600">*</span>
               </label>
-              <input x-model.lazy="name" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent success" id="grid-first-name" type="text" placeholder="Enter Name">
+              <input x-model.lazy="name" class=" h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Name">
              <div>
-              <p x-text="validation.name.error === true ? 'show red class':'show green class' "></p>
-              <p class="text-red-600 text-base" x-text="validation.name.message === 'This field cannot be empty.' ? 'show message red class':'show message green class'"></p>
-             </div>
-              <!-- <p class="text-red-600 text-base" x-text="validation.name.message"></p> -->
+              <!-- validation.name.message === 'This field cannot be empty.' ? 'red' : condition2 ? 'green' : 'default' -->
+              <p x-text="validation.name.message === 'This field cannot be empty.' ? 'red' : validation.name.message === 'Sucess class' ? 'green' : 'default' "></p>
+              <!-- <p class="text-red-600 text-base" x-text="validation.name.message === 'This field cannot be empty.' ? 'show message red class':'show message green class'"></p> -->
               <p class="text-red-600 text-base" x-text="validation.name.message"></p>
+            </div>
+              <!-- <p class="text-red-600 text-base" x-text="validation.name.message"></p> -->
               <!-- <p class="text-red-600 text-base" x-text="validation.name.error"></p> -->
               <!-- <p class="text-red-600 text-base" x-data="validation.name.successclass"></p> -->
             </div>
@@ -123,8 +124,9 @@ input:checked + label span {
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                 Business Name <span class="text-red-600">*</span>
               </label>
-              <input x-model.lazy="businessName" class=" h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Business Name">
+              <input x-model.lazy="businessName"  class=" h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Business Name">
               <p class="text-red-500 text-base" x-text="validation.businessName.message"></p>
+              
             </div>
           </div>
           <div class="mb-4">
@@ -315,7 +317,7 @@ input:checked + label span {
             name: {
                 rule: {
                 required: function (field) {
-                  console.log(field)
+                  // console.log(field)
                     if (field) {
                     return { error: false, message: ''}
                     } else {
@@ -324,7 +326,7 @@ input:checked + label span {
                 },
                 isSuccess: function (field, value = 1) {
                     if (field && field.length > value) {
-                    return { error: false, message: 'Sucess class'}
+                    return { error: true, message: 'Sucess class'}
                     } else {
                     return { error: true, message: `Error ${value}.`}
                     }
@@ -363,6 +365,13 @@ input:checked + label span {
                     return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
+                isSuccess: function (field, value = 1) {
+                    if (field && field.length > value) {
+                    return { error: false, message: 'Sucess class'}
+                    } else {
+                    return { error: true, message: `Error ${value}.`}
+                    }
+                }
                 },
                 error: true,
                 message: ''
