@@ -12,28 +12,54 @@
   input:checked + label {
   background-color: #F5FFF6;
 	border-color: #1FC157;
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 input:checked + label span {
-	color: green;
+	color: #1FC157;
 }
 
 .green-color {
   background-color: #1FC157;
 }
-
-.bubble:after{
-  content: "";
-  position: absolute;
-  top: 100%;
-  margin: 0 auto;
-  border-top: 20px solid blue;
-  border-top-color: inherit; 
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent; 
+/* 
+.bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 16px solid transparent;
+	border-top-color: white;
+	border-bottom: 0;
+	margin-left: -16px;
+	margin-bottom: -16px;
+} */
+.sucess{
+  
+}
+.bubble{
+  z-index: 10;
 }
 
+.bubble:after{
+  background-color: inherit;
+    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+    content: "\00a0";
+    display: block;
+    height: 20px;
+    left: 50%;
+	  margin-left: -10px;
+    position: relative;
+    z-index: 0;
+    top: 14px;
+    transform:             rotate( 315deg );
+        -moz-transform:    rotate( 315deg );
+        -ms-transform:     rotate( 315deg );
+        -o-transform:      rotate( 315deg );
+        -webkit-transform: rotate( 315deg );
+    width:  20px;
+}
 </style>
 <body>
   
@@ -52,7 +78,7 @@ input:checked + label span {
       </div>
     </div>
   </div>
-  
+
   <!-- Form  -->
   <div class="bg-gray-200 py-10">
     <div class="flex flex-wrap justify-center">
@@ -65,12 +91,14 @@ input:checked + label span {
     <div class="flex flex-wrap justify-center">
     <div class="bg-white flex justify-center mt-5 w-full lg:w-6/12 rounded-lg">
       <div class="py-5 w-full p-6">
-        <form action="" 
+        <form action="" name="form"
         x-data="validateForm()"
                     x-init="
                       $watch('name', value => { validate('name') })
                       $watch('businessName', value => { validate('businessName') })
                       $watch('businessOwner', value => { validate('businessOwner') })
+                      <!-- $watch('creditDaysRequired', value => {validate.value }) -->
+                      $watch('creditDaysRequired', value => {validate('creditDaysRequired') })
                       $watch('email', value => { validate('email') })
                       $watch('password', value => { validate('password') })
                     "
@@ -81,16 +109,21 @@ input:checked + label span {
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                 Name <span class="text-red-600">*</span>
               </label>
-              <input x-model.lazy="name" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Name">
+              <input x-model.lazy="name" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent success" id="grid-first-name" type="text" placeholder="Enter Name">
+             <div>
+              <p x-text="validation.name.error === true ? 'show red class':'show green class' "></p>
+              <p class="text-red-600 text-base" x-text="validation.name.message === 'This field cannot be empty.' ? 'show message red class':'show message green class'"></p>
+             </div>
               <!-- <p class="text-red-600 text-base" x-text="validation.name.message"></p> -->
               <p class="text-red-600 text-base" x-text="validation.name.message"></p>
+              <!-- <p class="text-red-600 text-base" x-text="validation.name.error"></p> -->
               <!-- <p class="text-red-600 text-base" x-data="validation.name.successclass"></p> -->
             </div>
             <div class="w-full md:w-1/2 px-3">
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                 Business Name <span class="text-red-600">*</span>
               </label>
-              <input x-model.lazy="businessName" class="mb-3 h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Business Name">
+              <input x-model.lazy="businessName" class=" h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Business Name">
               <p class="text-red-500 text-base" x-text="validation.businessName.message"></p>
             </div>
           </div>
@@ -98,7 +131,7 @@ input:checked + label span {
             <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
               Business Owner <span class="text-red-600">*</span>
             </label>
-            <input x-model="businessOwner" class="mb-3 h-14 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="username" type="text" placeholder="Enter Business Owner">
+            <input x-model="businessOwner" class="mb-3 h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="username" type="text" placeholder="Enter Business Owner">
               <p class="text-red-500 text-base" x-text="validation.businessOwner.message"></p>
           </div>
 
@@ -106,7 +139,7 @@ input:checked + label span {
             <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
               Owner’s Address <span class="text-red-600">*</span>
             </label>
-            <input class="mb-3 h-14 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="username" type="text" placeholder="Enter Owner’s Address">
+            <input class="mb-3 h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="username" type="text" placeholder="Enter Owner’s Address">
             <p class="text-red-500 text-base">This field cannot be empty</p>
           </div>
 
@@ -116,14 +149,14 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   EIN <span class="text-red-600">*</span>
                 </label>
-                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter EIN">
+                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter EIN">
                 <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Phone <span class="text-red-600">*</span>
                 </label>
-                <input class="h-14 mb-3 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Phone Number (Format: +12123331212)">
+                <input class="h-14 mb-3 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Phone Number (Format: +12123331212)">
                 <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
             </div>
@@ -134,7 +167,7 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Email <span class="text-red-600">*</span>
                 </label>
-                <input x-model="email" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Email Address">
+                <input x-model="email" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Email Address">
                 <!-- <p class="text-red-500 text-base">This field cannot be empty.</p> -->
                 <p class="text-red-500 text-base" x-text="validation.email.message"></p>
               </div>
@@ -142,7 +175,7 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Amazon Merchant ID<span class="text-red-600">*</span>
                 </label>
-                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Amazon Merchant ID">
+                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Amazon Merchant ID">
                 <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
             </div>
@@ -154,14 +187,14 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Years in Business  <span class="text-red-600">*</span>
                 </label>
-                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Years in Business">
+                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Years in Business">
                 <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Yearly Revenue  <span class="text-red-600">*</span>
                 </label>
-                <input class="mb-3 appearance-none h-14 block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Yearly Revenue">
+                <input class="mb-3 appearance-none h-14 block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Yearly Revenue">
                 <p class="text-red-500 text-base">This field cannot be empty</p>
               </div>
             </div>
@@ -172,7 +205,7 @@ input:checked + label span {
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Purchase Order Sum  <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full h-14 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Enter Purchase Order Sum">
+                <input class="appearance-none block w-full h-14 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Purchase Order Sum">
                 <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
@@ -182,39 +215,39 @@ input:checked + label span {
                 <!-- <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Enter Credit Days Required"> -->
                 <div class="grid grid-cols-3 gap-2 w-full max-w-screen-sm">
                   <div>
-                    <input class="hidden" id="radio_1" type="radio" name="radio" value="60 Days">
-                    <label class="flex flex-col p-3.5 border-2 border-gray-200 rounded cursor-pointer" for="radio_1">
+                    <!-- @change="console.log(validation.credit)" -->
+                    <input class="hidden" id="radio_1" type="radio" name="creditDaysRequired" x-model.lazy="creditDaysRequired" value="60 Days">
+                    <label class="flex flex-col p-3.5 border border-gray-200 rounded cursor-pointer" for="radio_1">
                       <span class="text-base text-center text-gray-400 font-semibold">60 Days</span>
                     </label>
                   </div>
                   <div>
-                    <input class="hidden" id="radio_2" type="radio" name="radio" value="90 Days">
-                    <label class="flex flex-col p-3.5 border-2 border-gray-200 rounded cursor-pointer" for="radio_2">
+                    <input  class="hidden" id="radio_2" type="radio" name="creditDaysRequired" x-model.lazy="creditDaysRequired" value="90 Days">
+                    <label class="flex flex-col p-3.5 border border-gray-200 rounded cursor-pointer" for="radio_2">
                       <span class="text-base text-center text-gray-400 font-semibold">90 Days</span>
                     </label>
                   </div>
                   <div>
-                    <input class="hidden" id="radio_3" type="radio" name="radio" value="120 Days">
-                    <label class="flex flex-col p-3.5 border-2 border-gray-200 rounded cursor-pointer" for="radio_3">
+                    <input class="hidden" id="radio_3" type="radio" name="creditDaysRequired" x-model.lazy="creditDaysRequired" value="120 Days">
+                    <label class="flex flex-col p-3.5 border border-gray-200 rounded cursor-pointer" for="radio_3">
                       <span class="text-base text-center text-gray-400 font-semibold">120 Days</span>
                     </label>
                   </div>
+                  <!-- <p>creditDaysRequired: <span x-text="creditDaysRequired"></span></p> -->
+                  <p class="text-red-600 text-base" x-text="validation.creditDaysRequired.message"></p>
                 </div>
-                <p class="text-red-500 text-base mt-3">This cannot be left unselected.</p>
+                <!-- <p class="text-red-500 text-base mt-3">This cannot be left unselected.</p> -->
               </div>
             </div>
 
-          <div class="mb-4">
-            <label class="flex space-x-1 text-gray-700 text-base font-semibold mb-2" for="username">
+          <div class="flex-wrap flex mb-4">
+            <label class="flex space-x-3 text-gray-700 text-base font-semibold mb-2" for="username">
               Bank Information
-
-  
-
               <span class="text-red-600">*</span> 
               <div x-data="{ open: false }" class="ml-4" @mouseleave="open = false">
                 <button @mouseover="open = true" ><img class="lg:h-6 lg:w-auto h-6 w-auto cursor-help" src="images/questionMarkIcon.png" alt=""> </button>
                 <div x-show="open" class="flex justify-center">
-                  <span class="lg:-mt-64 p-4 -mt-64 lg:w-1/6 w-4/6 lg:h-72 absolute bg-white shadow text-sm bubble whitespace-pre-wrap">In order for us to be able to extend you the requested credit amount, we will use Plaid to access your bank account for two specific purposes. The first is to view your transaction history to properly assess your credit request. The second is to initiate an automatic ACH transfer for repayment of the extended credit amount at the end of the pre-agreed term.</span>
+                  <span class="lg:-mt-64 p-4 -mt-64 lg:h-[200px] lg:w-[350px] h-[200px] w-[350px] absolute bg-white shadow text-sm bubble whitespace-pre-wrap">In order for us to be able to extend you the requested credit amount, we will use Plaid to access your bank account for two specific purposes. The first is to view your transaction history to properly assess your credit request. The second is to initiate an automatic ACH transfer for repayment of the extended credit amount at the end of the pre-agreed term.</span>
                 </div>
               </div>
               <span class="text-base font-medium text-blue-900 underline align-bottom">Click here for more info</span>
@@ -225,11 +258,8 @@ input:checked + label span {
             <p class="text-red-500 text-base mt-3">A bank account has to be added.</p>
           </div>
 
-
- 
-
           <div class="flex flex-wrap justify-center">
-            <button type="submit" :disabled="!name.length" class="h-14 lg:w-2/4 w-full my-4 hover:bg-green-700 text-white font-bold py-2 px-4 border green-color rounded disabled:bg-gray-200">
+            <button type="submit" :disabled="businessName.length ===0 || name.length ===0  " class="h-14 lg:w-2/4 w-full my-4 hover:bg-green-700 text-white font-bold py-2 px-4 border green-color rounded disabled:bg-gray-200">
               Submit
             </button>
           </div>
@@ -261,9 +291,11 @@ input:checked + label span {
       <P>All Rights Reserved</P>
     </div>
   </footer>
+  <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
 
   <!-- Validator Script -->
   <script>
+
     window.validateForm = function () {
         return {
             name: '',
@@ -283,6 +315,7 @@ input:checked + label span {
             name: {
                 rule: {
                 required: function (field) {
+                  console.log(field)
                     if (field) {
                     return { error: false, message: ''}
                     } else {
@@ -290,8 +323,29 @@ input:checked + label span {
                     }
                 },
                 isSuccess: function (field, value = 1) {
-                    if (field && field.length >= value) {
-                    return { error: true, message: 'Sucess class'}
+                    if (field && field.length > value) {
+                    return { error: false, message: 'Sucess class'}
+                    } else {
+                    return { error: true, message: `Error ${value}.`}
+                    }
+                }
+                },
+                error: true,
+                message: ''
+            },
+            creditDaysRequired: {
+                rule: {
+                required: function (field) {
+                  console.log(field)
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                isSuccess: function (field, value = 1) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class show'}
                     } else {
                     return { error: true, message: `Error ${value}.`}
                     }
@@ -456,19 +510,6 @@ input:checked + label span {
                 message: ''
             },
             purchaseOrderSum: {
-                rule: {
-                required: function (field) {
-                    if (field) {
-                    return { error: false, message: ''}
-                    } else {
-                    return { error: true, message: 'This field cannot be empty.'}
-                    }
-                },
-                },
-                error: true,
-                message: ''
-            },
-            creditDaysRequired: {
                 rule: {
                 required: function (field) {
                     if (field) {
