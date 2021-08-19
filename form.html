@@ -35,9 +35,19 @@ input:checked + label span {
 	margin-left: -16px;
 	margin-bottom: -16px;
 } */
-.sucess{
-  background-color: red!important;
+
+/* validation icons: success icon anad error icon */
+.sucessIcon{
+  /* background-image: url(/images/check.png); */
+  background-image: url("/images/check.png");
+  background-repeat: no-repeat;
 }
+.errorIcon{
+  background-image: url("/images/Cross.png");
+  background-repeat: no-repeat;
+}
+
+/* toolbox/speech bubble on hover */
 .bubble{
   z-index: 10;
 }
@@ -60,6 +70,9 @@ input:checked + label span {
         -webkit-transform: rotate( 315deg );
     width:  20px;
 }
+
+/* modal popup */
+
 </style>
 <body>
   
@@ -97,118 +110,165 @@ input:checked + label span {
                       $watch('name', value => { validate('name') })
                       $watch('businessName', value => { validate('businessName') })
                       $watch('businessOwner', value => { validate('businessOwner') })
+                      $watch('businessAddress', value => { validate('businessAddress') })
+                      $watch('ownersAddress', value => { validate('ownersAddress') })
+                      $watch('ein', value => { validate('ein') })
+                      $watch('phone', value => { validate('phone') })
                       <!-- $watch('creditDaysRequired', value => {validate.value }) -->
-                      $watch('creditDaysRequired', value => {validate('creditDaysRequired') })
                       $watch('email', value => { validate('email') })
-                      $watch('password', value => { validate('password') })
+                      $watch('yearsInBusiness', value => { validate('yearsInBusiness') })
+                      $watch('yearlyRevenue', value => { validate('yearlyRevenue') })
+                      $watch('purchaseOrderSum', value => { validate('purchaseOrderSum') })
+                      $watch('creditDaysRequired', value => {validate('creditDaysRequired') })
                     "
         >
           <!-- 2 col input for lg / 1 row for sm -->
-          <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <div class="flex flex-wrap -mx-3 mb-4">
+            <div class="w-full md:w-1/2 px-3 md:mb-0">
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                 Name <span class="text-red-600">*</span>
               </label>
-              <input x-model.lazy="name" class=" h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Name">
-             <div>
-              <!-- validation.name.message === 'This field cannot be empty.' ? 'red' : condition2 ? 'green' : 'default' -->
-              <p x-text="validation.name.message === 'This field cannot be empty.' ? 'red' : validation.name.message === 'Sucess class' ? 'green' : 'default' "></p>
-              <!-- <p class="text-red-600 text-base" x-text="validation.name.message === 'This field cannot be empty.' ? 'show message red class':'show message green class'"></p> -->
-              <p class="text-red-600 text-base" x-text="validation.name.message"></p>
+              <div class="relative">
+              <!-- :class="open ? '' : 'hidden'" -->
+              <!-- validation.name.message === 'This field cannot be empty.' ? 'red' : validation.name.message === 'Sucess class' ? 'green' : 'default' " -->
+              <input x-model.lazy="name" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.name.message === 'This field cannot be empty.' ? 'border-red-600' : validation.name.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter Name">
+              <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.name.message === 'This field cannot be empty.' ? 'errorIcon border-red-600' : validation.name.message === 'Sucess class' ? 'sucessIcon border-green-600' : 'default'" ></div>
+              <p class="text-red-600 text-base" x-text="validation.name.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.name.message === 'Sucess class' ? '' : ''"></p>
             </div>
-              <!-- <p class="text-red-600 text-base" x-text="validation.name.message"></p> -->
-              <!-- <p class="text-red-600 text-base" x-text="validation.name.error"></p> -->
-              <!-- <p class="text-red-600 text-base" x-data="validation.name.successclass"></p> -->
             </div>
             <div class="w-full md:w-1/2 px-3">
               <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                 Business Name <span class="text-red-600">*</span>
               </label>
-              <input x-model.lazy="businessName"  class=" h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Business Name">
-              <p class="text-red-500 text-base" x-text="validation.businessName.message"></p>
-              
+              <div class="relative">
+                <input x-model.lazy="businessName" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.businessName.message === 'This field cannot be empty.' ? 'border-red-600' : validation.businessName.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter Business Name">
+                <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.businessName.message === 'This field cannot be empty.' ? 'errorIcon' : validation.businessName.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+                <p class="text-red-600 text-base" x-text="validation.businessName.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.businessName.message === 'Sucess class' ? '' : ''"></p>
+              </div>
             </div>
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
-              Business Owner <span class="text-red-600">*</span>
+              Business Address <span class="text-red-600">*</span>
             </label>
-            <input x-model="businessOwner" class="mb-3 h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="username" type="text" placeholder="Enter Business Owner">
-              <p class="text-red-500 text-base" x-text="validation.businessOwner.message"></p>
+            <div class="relative">
+              <input x-model.lazy="businessAddress" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.businessAddress.message === 'This field cannot be empty.' ? 'border-red-600' : validation.businessAddress.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter Business Address">
+              <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.businessAddress.message === 'This field cannot be empty.' ? 'errorIcon' : validation.businessAddress.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+              <p class="text-red-600 text-base" x-text="validation.businessAddress.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.businessAddress.message === 'Sucess class' ? '' : ''"></p>
+            </div>
           </div>
 
           <div class="mb-4">
             <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
-              Owner’s Address <span class="text-red-600">*</span>
+              Business Owner <span class="text-red-600">*</span>
             </label>
-            <input class="mb-3 h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="username" type="text" placeholder="Enter Owner’s Address">
-            <p class="text-red-500 text-base">This field cannot be empty</p>
+            <div class="relative">
+              <input x-model.lazy="businessOwner" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.businessOwner.message === 'This field cannot be empty.' ? 'border-red-600' : validation.businessOwner.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter Business Owner">
+              <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.businessOwner.message === 'This field cannot be empty.' ? 'errorIcon' : validation.businessOwner.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+              <p class="text-red-600 text-base" x-text="validation.businessOwner.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.businessOwner.message === 'Sucess class' ? '' : ''"></p>
+            </div>
           </div>
 
+          <div class="mb-4">
+            <label class="block text-gray-700 text-base font-semibold mb-2" for="username">
+              Owner's Address <span class="text-red-600">*</span>
+            </label>
+            <div class="relative">
+              <input x-model.lazy="ownersAddress" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.ownersAddress.message === 'This field cannot be empty.' ? 'border-red-600' : validation.ownersAddress.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter Owner's Address">
+              <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.ownersAddress.message === 'This field cannot be empty.' ? 'errorIcon' : validation.ownersAddress.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+              <p class="text-red-600 text-base" x-text="validation.ownersAddress.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.ownersAddress.message === 'Sucess class' ? '' : ''"></p>
+            </div>
+          </div>
+          
+
             <!-- 2 col input for lg / 1 row for sm -->
-            <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="flex flex-wrap -mx-3 mb-4">
+              <div class="w-full md:w-1/2 px-3 md:mb-0">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   EIN <span class="text-red-600">*</span>
                 </label>
-                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter EIN">
-                <p class="text-red-500 text-base">This field cannot be empty.</p>
+                <div class="relative">
+                  <input x-model.lazy="ein" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.ein.message === 'This field cannot be empty.' ? 'border-red-600' : validation.ein.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter EIN">
+                  <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.ein.message === 'This field cannot be empty.' ? 'errorIcon' : validation.ein.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+                  <p class="text-red-600 text-base" x-text="validation.ein.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.ein.message === 'Sucess class' ? '' : ''"></p>
+                </div>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Phone <span class="text-red-600">*</span>
                 </label>
-                <input class="h-14 mb-3 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Phone Number (Format: +12123331212)">
-                <p class="text-red-500 text-base">This field cannot be empty.</p>
+               
+                <div class="relative">
+                  <!-- (validation.email.message === 'This field has wrong email address format.' && validation.email.error === true) ? 'red' : (validation.email.message === 'This field has wrong email address format.' && validation.email.error === true) ? 'green' : 'default' " -->
+                    <input x-model.lazy="phone" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="(validation.phone.message === 'Enter a valid phone number (e.g. +12125552368).' && validation.phone.error === true) ? 'border-red-600' : (validation.phone.message === 'This field cannot be empty.' && validation.phone.error === true) ? 'border-red-600' : (validation.phone.message === '' && validation.phone.error === false) ? 'border-green-500' :'border-gray-200'" id="grid-first-name" type="text" placeholder="Enter Phone">
+                    <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="(validation.phone.message === 'Enter a valid phone number (e.g. +12125552368).' && validation.phone.error === true) ? 'errorIcon' : (validation.phone.message === 'This field cannot be empty.' && validation.phone.error === true) ? 'errorIcon' : (validation.phone.message === '' && validation.phone.error === false) ? 'sucessIcon' :''" ></div>
+                  </div>
+                  <p class="text-red-500 text-base" x-text="validation.phone.message"></p>
+                  <!-- <p class="text-red-600 text-base" x-text="validation.phone.error"></p> -->
+                
               </div>
             </div>
 
             <!-- 2 col input for lg / 1 row for sm -->
-            <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="flex flex-wrap -mx-3 mb-4">
+              <div class="w-full md:w-1/2 px-3 md:mb-0">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Email <span class="text-red-600">*</span>
                 </label>
-                <input x-model="email" class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Email Address">
-                <!-- <p class="text-red-500 text-base">This field cannot be empty.</p> -->
+                <div class="relative">
+                <!-- (validation.email.message === 'This field has wrong email address format.' && validation.email.error === true) ? 'red' : (validation.email.message === 'This field has wrong email address format.' && validation.email.error === true) ? 'green' : 'default' " -->
+                  <input x-model.lazy="email" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="(validation.email.message === 'This field has wrong email address format.' && validation.email.error === true) ? 'border-red-600' : (validation.email.message === 'This field cannot be empty.' && validation.email.error === true) ? 'border-red-600' : (validation.email.message === '' && validation.email.error === false) ? 'border-green-500' :'border-gray-200'" id="grid-first-name" type="text" placeholder="Enter Email">
+                  <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="(validation.email.message === 'This field has wrong email address format.' && validation.email.error === true) ? 'errorIcon' : (validation.email.message === 'This field cannot be empty.' && validation.email.error === true) ? 'errorIcon' : (validation.email.message === '' && validation.email.error === false) ? 'sucessIcon' :''" ></div>
+                </div>
                 <p class="text-red-500 text-base" x-text="validation.email.message"></p>
+                <!-- debug -->
+                <!-- <p class="text-red-600 text-base" x-text="validation.email.message === 'This field cannot be empty.' ? '' : validation.email.message === 'Sucess class' ? '' : ''"></p> -->
+                <!-- <p class="text-red-500 text-base" x-text="validation.email.error"></p> -->
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
-                  Amazon Merchant ID<span class="text-red-600">*</span>
+                  Amazon Merchant ID
                 </label>
                 <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Amazon Merchant ID">
-                <p class="text-red-500 text-base">This field cannot be empty.</p>
               </div>
             </div>
             
 
             <!-- 2 col input for lg / 1 row for sm -->
-            <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="flex flex-wrap -mx-3 mb-4">
+              <div class="w-full md:w-1/2 px-3 md:mb-0">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Years in Business  <span class="text-red-600">*</span>
                 </label>
-                <input class="h-14 appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Years in Business">
-                <p class="text-red-500 text-base">This field cannot be empty.</p>
+                <div class="relative">
+                  <input x-model.lazy="yearsInBusiness" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.yearsInBusiness.message === 'This field cannot be empty.' ? 'border-red-600' : validation.yearsInBusiness.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter Years in Business">
+                  <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.yearsInBusiness.message === 'This field cannot be empty.' ? 'errorIcon' : validation.yearsInBusiness.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+                  <p class="text-red-600 text-base" x-text="validation.yearsInBusiness.message === 'This field cannot be empty.' ? 'This field cannot be empty.' : validation.yearsInBusiness.message === 'Sucess class' ? '' : ''"></p>
+                </div>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
                   Yearly Revenue  <span class="text-red-600">*</span>
                 </label>
-                <input class="mb-3 appearance-none h-14 block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-last-name" type="text" placeholder="Enter Yearly Revenue">
-                <p class="text-red-500 text-base">This field cannot be empty</p>
+                <div class="relative">
+                  <input x-model.lazy="yearlyRevenue" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.yearlyRevenue.message === 'This field cannot be empty.' ? 'border-red-600' : validation.yearlyRevenue.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Enter Yearly Revenue">
+                  <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.yearlyRevenue.message === 'This field cannot be empty.' ? 'errorIcon' : validation.yearlyRevenue.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+                  <p class="text-red-600 text-base" x-text="validation.yearlyRevenue.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.yearlyRevenue.message === 'Sucess class' ? '' : ''"></p>
+                </div>
               </div>
             </div>
 
             <!-- 2 col input for lg / 1 row for sm -->
-            <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="flex flex-wrap -mx-3 mb-4">
+              <div class="w-full md:w-1/2 px-3 md:mb-0">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-first-name">
                   Purchase Order Sum  <span class="text-red-600">*</span>
                 </label>
-                <input class="appearance-none block w-full h-14 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" id="grid-first-name" type="text" placeholder="Enter Purchase Order Sum">
-                <p class="text-red-500 text-base">This field cannot be empty.</p>
+                <div class="relative">
+                  <input x-model.lazy="purchaseOrderSum" class="mb-3 h-14 appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" :class="validation.purchaseOrderSum.message === 'This field cannot be empty.' ? 'border-red-600' : validation.purchaseOrderSum.message === 'Sucess class' ? 'border-green-500' : 'border-gray-200' " id="grid-first-name" type="text" placeholder="Purchase Order Sum">
+                  <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.purchaseOrderSum.message === 'This field cannot be empty.' ? 'errorIcon' : validation.purchaseOrderSum.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+                  <p class="text-red-600 text-base" x-text="validation.purchaseOrderSum.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.purchaseOrderSum.message === 'Sucess class' ? '' : ''"></p>
+                </div>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block tracking-wide text-gray-700 text-base font-semibold mb-2" for="grid-last-name">
@@ -236,9 +296,9 @@ input:checked + label span {
                     </label>
                   </div>
                   <!-- <p>creditDaysRequired: <span x-text="creditDaysRequired"></span></p> -->
-                  <p class="text-red-600 text-base" x-text="validation.creditDaysRequired.message"></p>
+                  <div class="absolute right-[20px] top-[23px] w-5 h-5" :class="validation.creditDaysRequired.message === 'This field cannot be empty.' ? 'errorIcon' : validation.creditDaysRequired.message === 'Sucess class' ? 'sucessIcon' : 'default'" ></div>
+                  <p class="text-red-600 text-base" x-text="validation.creditDaysRequired.message === 'This field cannot be empty.' ? 'This field cannot be empty' : validation.creditDaysRequired.message === 'Sucess class' ? '' : ''"></p>
                 </div>
-                <!-- <p class="text-red-500 text-base mt-3">This cannot be left unselected.</p> -->
               </div>
             </div>
 
@@ -261,13 +321,11 @@ input:checked + label span {
           </div>
 
           <div class="flex flex-wrap justify-center">
-            <button type="submit" :disabled="businessName.length ===0 || name.length ===0  " class="h-14 lg:w-2/4 w-full my-4 hover:bg-green-700 text-white font-bold py-2 px-4 border green-color rounded disabled:bg-gray-200">
+            <button type="button" :disabled="businessName.length ===0 || name.length ===0  " class="h-14 lg:w-2/4 w-full my-4 hover:bg-green-700 text-white font-bold py-2 px-4 border green-color rounded disabled:bg-gray-200">
               Submit
             </button>
           </div>
  
-          
-
           <!-- <div class="flex items-center justify-between">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
               Sign In
@@ -279,16 +337,14 @@ input:checked + label span {
 
         </form>
       </div>
+     </div>
     </div>
-    </div>
-
-
-  
   </div>
 
   <!-- Footer -->
   <footer class="bg-white">
-    <div class="md:flex lg:pl-64 max-w-screen-lg space-x-2 text-center py-10 p-8 text-gray-500">
+    <!-- w-full mx-auto px-4 sm:px-6 border-b-2 border-gray-100 max-w-screen-lg -->
+    <div class="w-full mx-auto md:flex max-w-screen-lg space-x-2 text-center py-10 p-8 text-gray-500">
       <P>Copyright © 2021 <span class="text-green-500">Transigo</span></P>
       <P>All Rights Reserved</P>
     </div>
@@ -303,7 +359,8 @@ input:checked + label span {
             name: '',
             businessName: '',
             businessOwner: '',
-            ownerAddress: '',
+            businessAddress: '',
+            ownersAddress: '',
             ein: '',
             phone: '',
             email: '',
@@ -324,12 +381,16 @@ input:checked + label span {
                     return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
-                isSuccess: function (field, value = 1) {
+                isSuccess: function (field, value = 0) {
                     if (field && field.length > value) {
                     return { error: true, message: 'Sucess class'}
-                    } else {
-                    return { error: true, message: `Error ${value}.`}
+                    } 
+                    else {
+                    return { error: true, message: 'This field cannot be empty.'}
                     }
+                    // else {
+                    // return { error: true, message: `Error ${value}.`}
+                    // }
                 }
                 },
                 error: true,
@@ -345,12 +406,10 @@ input:checked + label span {
                     return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
-                isSuccess: function (field, value = 1) {
+                isSuccess: function (field, value = 0) {
                     if (field && field.length > value) {
-                    return { error: true, message: 'Sucess class show'}
-                    } else {
-                    return { error: true, message: `Error ${value}.`}
-                    }
+                    return { error: true, message: 'Sucess class'}
+                    } 
                 }
                 },
                 error: true,
@@ -365,12 +424,10 @@ input:checked + label span {
                     return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
-                isSuccess: function (field, value = 1) {
+                isSuccess: function (field, value = 0) {
                     if (field && field.length > value) {
-                    return { error: false, message: 'Sucess class'}
-                    } else {
-                    return { error: true, message: `Error ${value}.`}
-                    }
+                    return { error: true, message: 'Sucess class'}
+                    } 
                 }
                 },
                 error: true,
@@ -379,17 +436,29 @@ input:checked + label span {
             businessOwner: {
                 rule: {
                 required: function (field) {
+                  // console.log(field)
                     if (field) {
                     return { error: false, message: ''}
                     } else {
                     return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
+                isSuccess: function (field, value = 0) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class'}
+                    } 
+                    else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                    // else {
+                    // return { error: true, message: `Error ${value}.`}
+                    // }
+                }
                 },
                 error: true,
                 message: ''
             },
-            ownerAddress: {
+            businessAddress: {
                 rule: {
                 required: function (field) {
                     if (field) {
@@ -398,6 +467,32 @@ input:checked + label span {
                     return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
+                isSuccess: function (field, value = 0) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class'}
+                    } 
+                }
+                },
+                error: true,
+                message: ''
+            },
+            ownersAddress: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                isSuccess: function (field, value = 0) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class'}
+                    } 
+                    else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                }
                 },
                 error: true,
                 message: ''
@@ -411,6 +506,11 @@ input:checked + label span {
                     return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
+                isSuccess: function (field, value = 0) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class'}
+                    } 
+                }
                 },
                 error: true,
                 message: ''
@@ -425,14 +525,13 @@ input:checked + label span {
                     }
                 },
                 phone: function (field) {
-                  // change this for phone regex us format
-                    const rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    const rgx = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
                     if (rgx.test(field)) {
                     return { error: false, message: ''}
                     } else {
                     return { error: true, message: 'Enter a valid phone number (e.g. +12125552368).'}
                     }
-                }
+                },
                 },
                 error: true,
                 message: ''
@@ -443,7 +542,7 @@ input:checked + label span {
                     if (field) {
                     return { error: false, message: ''}
                     } else {
-                    return { error: true, message: 'This field is required.'}
+                    return { error: true, message: 'This field cannot be empty.'}
                     }
                 },
                 email: function (field) {
@@ -453,6 +552,60 @@ input:checked + label span {
                     } else {
                     return { error: true, message: 'This field has wrong email address format.'}
                     }
+                },
+                },
+                error: true,
+                message: ''
+            },
+            yearsInBusiness: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                   isSuccess: function (field, value = 0) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class'}
+                    } 
+                }
+                },
+                error: true,
+                message: ''
+            },
+            yearlyRevenue: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                isSuccess: function (field, value = 0) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class'}
+                    } 
+                }
+                },
+                error: true,
+                message: ''
+            },
+            purchaseOrderSum: {
+                rule: {
+                required: function (field) {
+                    if (field) {
+                    return { error: false, message: ''}
+                    } else {
+                    return { error: true, message: 'This field cannot be empty.'}
+                    }
+                },
+                isSuccess: function (field, value = 0) {
+                    if (field && field.length > value) {
+                    return { error: true, message: 'Sucess class'}
+                    } 
                 }
                 },
                 error: true,
@@ -477,59 +630,7 @@ input:checked + label span {
                 },
                 error: true,
                 message: ''
-            }
             },
-            amazonMerchantId: {
-                rule: {
-                required: function (field) {
-                    if (field) {
-                    return { error: false, message: ''}
-                    } else {
-                    return { error: true, message: 'This field cannot be empty.'}
-                    }
-                },
-                },
-                error: true,
-                message: ''
-            },
-            yearsInBusiness: {
-                rule: {
-                required: function (field) {
-                    if (field) {
-                    return { error: false, message: ''}
-                    } else {
-                    return { error: true, message: 'This field cannot be empty.'}
-                    }
-                },
-                },
-                error: true,
-                message: ''
-            },
-            yearlyRevenue: {
-                rule: {
-                required: function (field) {
-                    if (field) {
-                    return { error: false, message: ''}
-                    } else {
-                    return { error: true, message: 'This field cannot be empty.'}
-                    }
-                },
-                },
-                error: true,
-                message: ''
-            },
-            purchaseOrderSum: {
-                rule: {
-                required: function (field) {
-                    if (field) {
-                    return { error: false, message: ''}
-                    } else {
-                    return { error: true, message: 'This field cannot be empty.'}
-                    }
-                },
-                },
-                error: true,
-                message: ''
             },
             validate (field) {
             for (const key in this.validation[field].rule) {
