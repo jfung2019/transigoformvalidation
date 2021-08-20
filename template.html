@@ -9,69 +9,17 @@
     <title>Form</title>
 </head>
 <style>
-  input:checked + label {
-  background-color: #F5FFF6;
-	border-color: #1FC157;
-}
-
-input:checked + label span {
-	color: #1FC157;
-}
-
-.green-color {
-  background-color: #1FC157;
-}
-/* 
-.bubble:after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border: 16px solid transparent;
-	border-top-color: white;
-	border-bottom: 0;
-	margin-left: -16px;
-	margin-bottom: -16px;
-} */
-
-/* validation icons: success icon anad error icon */
-.sucessIcon{
-  /* background-image: url(/images/check.png); */
-  background-image: url("/images/check.png");
+.cross{
+  background-image: url("/images/minus.png");
   background-repeat: no-repeat;
+  padding: 5px;
+  margin: 5px;
 }
-.errorIcon{
-  background-image: url("/images/Cross.png");
+.check{
+  background-image: url("/images/plus.png");
   background-repeat: no-repeat;
+  padding: 5px;
 }
-
-/* toolbox/speech bubble on hover */
-.bubble{
-  z-index: 10;
-}
-
-.bubble:after{
-  background-color: inherit;
-    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
-    content: "\00a0";
-    display: block;
-    height: 20px;
-    left: 50%;
-	  margin-left: -10px;
-    position: relative;
-    z-index: 0;
-    top: 14px;
-    transform:             rotate( 315deg );
-        -moz-transform:    rotate( 315deg );
-        -ms-transform:     rotate( 315deg );
-        -o-transform:      rotate( 315deg );
-        -webkit-transform: rotate( 315deg );
-    width:  20px;
-}
-
-/* modal popup */
 
 </style>
 <body>
@@ -91,24 +39,99 @@ input:checked + label span {
   </div>
 
   <!-- content -->
+  <div class="wrapper-content-modal" x-data="{ 'isDialogOpen': false }"
+  @keydown.escape="isDialogOpen = false">
   <div class="w-full h-10/12 bg-[#0A1828] opacity-90 text-white">
     <div class="text-center pt-20">
-     <div class="text-[42px] font-semibold">Thank You for Filling Out Your Information</div>
-     <button class="mt-10 bg-transparent hover:bg-[#1FC157] text-[#1FC157] font-semibold hover:text-white py-3 px-6 border border-[#1FC157] hover:border-transparent rounded">
+     <div class="lg:text-[42px] text-2xl font-semibold">Thank You for Filling Out Your Information</div>
+
+     <!-- open modal for view details -->
+     <button class="mt-10 bg-transparent hover:bg-[#1FC157] text-[#1FC157] font-semibold hover:text-white py-3 px-6 border border-[#1FC157] hover:border-transparent rounded" 
+     @click="isDialogOpen = true">
         View your details
       </button>
-     <div class="pt-9 font-normal">Here’s what you need to know about our credit approval process</div>
-     <div class="pt-10 text-2xl font-semibold">Welcome to Transigo’s B2B Pay Later Solution (and Next Steps)</div>
-        
-     <div class="flex flex-wrap justify-center">
-         <div class="lg:w-2/6 md:3/6">
-            <div class="pt-4 text-base pb-20">
-                <div class="font-normal">Allow us to introduce ourselves. We are Transigo Inc., the credit partner of [marketplace name], and we will be providing your requested point-of-sale credit.</div> 
-                <div class="font-normal">For the next stage of the credit approval process, we will be presenting you with a bank credentials request via Plaid. This is to allow us to make a fair assessment of your business, maximize your chances of approval, and facilitate easy repayment of any credit amount extended to you.</div>
-                <div class="font-normal"> We understand that you may naturally have concerns about providing access to your bank credentials. We hope the following FAQ addresses your concerns.</div>
-             </div>
-         </div>
-     </div>
+
+    <!-- modal overlay -->
+    <!-- overlay -->
+    <div
+        class="overflow-auto lg:h-[230vh] md:h-[150vh] h-[180vh]"
+        style="background-color: rgba(0,0,0,0.5)"
+        x-show="isDialogOpen"
+        :class="{ 'absolute inset-0 z-10 flex items-start justify-center': isDialogOpen }"
+    >
+      <!-- dialog -->
+      <div class="bg-white shadow-2xl lg:w-6/12 w-11/12 border lg:mt-40 mt-24 rounded-lg"
+           x-show="isDialogOpen"
+           @click.away="isDialogOpen = false">
+
+          <div class="flex text-black justify-between items-center text-xl mt-10 px-10">
+              <h6 class="font-semibold text-2xl text-center text-[#03176B]">Your Information Details</h6>
+              <!-- close button -->
+              <button type="button" @click="isDialogOpen = false">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.9268 1L1.07583 13" stroke="#03176B" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 12.9256L1 1.07471" stroke="#03176B" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+          </div>
+          <div class="wrapper-content mt-12">
+
+            <!-- content -->
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <div class="flex flex-wrap text-black justify-between lg:px-10 px-5 mb-4">
+              <div class="flex justify-start w-full lg:w-1/2 text-base py-5">Name</div>
+              <div class="flex justify-start lg:justify-end w-full lg:w-1/2 text-base font-semibold">John Smith</div>
+            </div>
+            <!-- <div class="flex flex-wrap text-black justify-between px-10 mb-4">
+              <div class="">Phone</div>
+              <div class="">+12123331212</div>
+            </div> -->
+          </div>
+      </div><!-- /dialog -->
+    </div><!-- /overlay -->
+
+      <div class="lg:px-0 px-6">
+        <div class="pt-9 font-normal text-base">Here’s what you need to know about our credit approval process</div>
+        <div class="pt-10 lg:text-2xl font-semibold text-xl">Welcome to Transigo’s B2B Pay Later Solution (and Next Steps)</div>
+           
+        <div class="flex flex-wrap justify-center">
+            <div class="lg:w-2/6 md:3/6">
+               <div class="pt-4 text-base pb-20">
+                   <div class="font-normal">Allow us to introduce ourselves. We are Transigo Inc., the credit partner of [marketplace name], and we will be providing your requested point-of-sale credit.</div> 
+                   <div class="font-normal">For the next stage of the credit approval process, we will be presenting you with a bank credentials request via Plaid. This is to allow us to make a fair assessment of your business, maximize your chances of approval, and facilitate easy repayment of any credit amount extended to you.</div>
+                   <div class="font-normal"> We understand that you may naturally have concerns about providing access to your bank credentials. We hope the following FAQ addresses your concerns.</div>
+                </div>
+            </div>
+        </div>
+      </div>
+  
   
     </div>
   </div>
@@ -117,31 +140,17 @@ input:checked + label span {
     <div class="bg-transparent flex w-full mx-auto max-w-screen-lg rounded-lg">
       <div class="py-5 w-full p-6">
           <div class="text-2xl text-center font-semibold mb-10">Frequently Asked Questions About Bank Credential Authorization</div>
-        <div class=""> 
-            <!-- 1 -->
-            <div class="wrapper  bg-white rounded shadow">
-                <div class="title">
-                1. Who is Transigo?
+
+             <!-- 1 -->
+             <div class="wrapper mt-5 bg-white rounded shadow cursor-pointer border rounded-lg"  x-data="{ show: false }">
+              <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" >
+                <div :class="show ? 'text-[#1FC157]' : ''" class="flex flex-wrap font-semibold lg:py-6 py-4 lg:pl-10 pl-5 text-xl justify-between">
+                  <div class="w-10/12">
+                    1. Who is Transigo?
+                   </div>
+                  <span class="lg:mr-10 mr-5 cross w-5 h-5 mt-2" :class="show ? 'cross' : 'check'"></span>
                 </div>
-                <div class="desc">
-                    We are a trusted B2B marketplace partner that provides point-of-sale credit to buyers like yourself. As part of this service, we will need your permission to access your bank account information via Plaid.
-                </div>
-            </div>
-            <!-- 2 -->
-            <div class="wrapper mt-5 bg-white rounded shadow">
-                <div class="title">
-                1. Who is Transigo?
-                </div>
-                <div class="desc">
-                    We are a trusted B2B marketplace partner that provides point-of-sale credit to buyers like yourself. As part of this service, we will need your permission to access your bank account information via Plaid.
-                </div>
-            </div>
-            <!-- 3 -->
-            <div x-data="{ show: false }">
-                <button @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }">
-                Toggle Show
-                  </button>
-                <div class="bg-white" 
+                <div class="" 
                 x-show="show" 
                 x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 transform scale-90"
@@ -149,16 +158,167 @@ input:checked + label span {
                 x-transition:leave="transition ease-in duration-300"
                 x-transition:leave-start="opacity-100 transform scale-100"
                 x-transition:leave-end="opacity-0 transform scale-90">
-                Hello world
+                <div class="desc -mt-1 lg:pl-10 px-5 font-normal text-base lg:pb-6 pb-4">
+                  We are a trusted B2B marketplace partner that provides point-of-sale credit to buyers like yourself. As part of this service, we will need your permission to access your bank account information via Plaid.
                 </div>
+                </div>
+              </div>
             </div>
-        </div>
+
+               <!-- 2 -->
+               <div class="wrapper mt-5 bg-white rounded shadow cursor-pointer border rounded-lg"  x-data="{ show: false }">
+                <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" >
+                  <div :class="show ? 'text-[#1FC157]' : ''" class="flex flex-wrap font-semibold lg:py-6 py-4 lg:pl-10 pl-5 text-xl justify-between">
+                    <div class="w-10/12">
+                      2. Who is Plaid?
+                     </div>
+                    <span class="lg:mr-10 mr-5 cross w-5 h-5 mt-2" :class="show ? 'cross' : 'check'"></span>
+                  </div>
+                  <div class="" 
+                  x-show="show" 
+                  x-transition:enter="transition ease-out duration-300"
+                  x-transition:enter-start="opacity-0 transform scale-90"
+                  x-transition:enter-end="opacity-100 transform scale-100"
+                  x-transition:leave="transition ease-in duration-300"
+                  x-transition:leave-start="opacity-100 transform scale-100"
+                  x-transition:leave-end="opacity-0 transform scale-90">
+                  <div class="desc -mt-1 lg:pl-10 px-5 font-normal text-base pb-6">
+                    Plaid is a company that provides a fully secure and audited system for people to connect their bank accounts to various apps. Its services are currently being used by multi-billion-dollar companies like Venmo, Coinbase, Betterment, Acorns, Chime, and American Express.
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+
+             <!-- 3 -->
+             <div class="wrapper mt-5 bg-white rounded shadow cursor-pointer border rounded-lg"  x-data="{ show: false }">
+              <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" >
+                <div :class="show ? 'text-[#1FC157]' : ''" class="flex flex-wrap font-semibold lg:py-6 py-4 lg:pl-10 pl-5 text-xl justify-between">
+                  <div class="w-10/12">
+                    3. Who has access to my banking credentials?
+                   </div>
+                  <span class="lg:mr-10 mr-5 cross w-5 h-5 mt-2" :class="show ? 'cross' : 'check'"></span>
+                </div>
+                <div class="" 
+                x-show="show" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-90">
+                <div class="desc -mt-1 lg:pl-10 px-5 font-normal text-base pb-6">
+                  Only Plaid will maintain a record of your banking credentials. Transigo will not – and will never have – access to your banking credentials.
+                </div>
+                </div>
+              </div>
+            </div>
+
+
+             <!-- 4 -->
+             <div class="wrapper mt-5 bg-white rounded shadow cursor-pointer border rounded-lg"  x-data="{ show: false }">
+              <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" >
+                <div :class="show ? 'text-[#1FC157]' : ''" class="flex flex-wrap font-semibold lg:py-6 py-4 lg:pl-10 pl-5 text-xl justify-between">
+                  <div class="w-10/12">
+                    4. Are my banking credentials secure with Plaid?
+                   </div>
+                  <span class="lg:mr-10 mr-5 cross w-5 h-5 mt-2" :class="show ? 'cross' : 'check'"></span>
+                </div>
+                <div class="" 
+                x-show="show" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-90">
+                <div class="desc -mt-1 lg:pl-10 px-5 font-normal text-base pb-6">
+                  There is a reason Plaid is used by so many major financial services companies. The company ensures your data remains safe and private with best-in-class encryption protocols, modern cloud infrastructure, 24/7 monitoring, and independent security testing. Please read more at <a class="text-[#1FC157]" href="https://plaid.com/safety/">Plaid.com/safety</a>.
+                </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- 5 -->
+             <div class="wrapper mt-5 bg-white rounded shadow cursor-pointer border rounded-lg"  x-data="{ show: false }">
+              <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" >
+                <div :class="show ? 'text-[#1FC157]' : ''" class="flex flex-wrap font-semibold lg:py-6 py-4 lg:pl-10 pl-5 text-xl justify-between">
+                  <div class="w-10/12">
+                     5. Why do I need to provide my banking credentials to Plaid?
+                    </div>
+                  <span class="lg:mr-10 mr-5 cross w-5 h-5 mt-2" :class="show ? 'cross' : 'check'"></span>
+                </div>
+                <div class="" 
+                x-show="show" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-90">
+                <div class="desc -mt-1 lg:pl-10 px-5 font-normal text-base pb-6">
+                  In order for us to be able to extend you the requested credit amount, we will use Plaid to access your bank account for two specific purposes. The first is to view your transaction history to properly assess your credit request. The second is to initiate an automatic ACH transfer for repayment of the extended credit amount at the end of the pre-agreed term.
+                </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- 6 -->
+             <div class="wrapper mt-5 bg-white rounded shadow cursor-pointer border rounded-lg"  x-data="{ show: false }">
+              <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" >
+                <div :class="show ? 'text-[#1FC157]' : ''" class="flex flex-wrap font-semibold lg:py-6 py-4 lg:pl-10 pl-5 text-xl justify-between">
+                  <div class="w-10/12">
+                    6. Can Plaid or Transigo withdraw funds from my bank account without my knowledge?
+                    </div>
+                  <span class="lg:mr-10 mr-5 cross w-5 h-5 mt-2" :class="show ? 'cross' : 'check'"></span>
+                </div>
+                <div class="" 
+                x-show="show" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-90">
+                <div class="desc -mt-1 lg:pl-10 px-5 font-normal text-base pb-6">
+                  Absolutely not. You will know the exact amount that needs to be repaid at the end of the credit term upon approval of the credit amount. We will also notify you X days in advance of the upcoming ACH transfer. No other funds will be transferred, and the authorization of your banking credentials will automatically be removed after the repayment is complete.
+                </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- 7 -->
+             <div class="wrapper mt-5 bg-white rounded shadow cursor-pointer border rounded-lg"  x-data="{ show: false }">
+              <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" >
+                <div :class="show ? 'text-[#1FC157]' : ''" class="flex flex-wrap font-semibold lg:py-6 py-4 lg:pl-10 pl-5 text-xl justify-between">
+                  <div class="w-10/12">
+                  7. Will my credit information and transaction history be shared with any third parties?
+                  </div>
+                  <span class="lg:mr-10 mr-5 cross w-5 h-5 mt-2" :class="show ? 'cross' : 'check'"></span>
+                </div>
+                <div class="" 
+                x-show="show" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-90">
+                <div class="desc -mt-1 lg:pl-10 px-5 font-normal text-base pb-6">
+                  The only third parties that will have access to your banking information are those working together with Transigo to provide point-of-sale credit to buyers like yourself. These include credit insurance providers like Euler Hermes and payment API providers like Dwolla – all established companies with strong reputations in the industry.
+                </div>
+                </div>
+              </div>
+            </div>
+
+
       </div>
      </div>
     </div>
 
   </div>
-
+</div>
+  
   <!-- Footer -->
   <footer class="bg-white">
     <!-- w-full mx-auto px-4 sm:px-6 border-b-2 border-gray-100 max-w-screen-lg -->
